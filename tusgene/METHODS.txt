@@ -1,0 +1,233 @@
+================================================================================
+TUSGENE SPATIAL CLUSTERING ANALYSIS - STATISTICAL METHODS
+================================================================================
+
+This document describes the statistical methods used in the TUS gene spatial
+clustering analysis pipeline.
+
+
+================================================================================
+1. CLUSTERING METHODOLOGY
+================================================================================
+
+1.1 DIMENSIONALITY REDUCTION
+--------------------------------------------------------------------------------
+Method: Principal Component Analysis (PCA)
+Implementation: sklearn.decomposition.PCA
+
+Rationale:
+- Gene expression data is high-dimensional (35 genes)
+- PCA reduces noise and mitigates curse of dimensionality
+- 10 principal components capture ~90% of total variance
+- Improves K-means clustering stability
+
+Parameters:
+- n_components: 10 (configurable via config.N_PCA_COMPONENTS)
+- random_state: 42 (for reproducibility)
+
+
+1.2 CLUSTER NUMBER SELECTION
+--------------------------------------------------------------------------------
+Method: Silhouette Analysis
+Implementation: sklearn.metrics.silhouette_score
+
+The silhouette score measures how similar each region is to its own cluster
+compared to other clusters. Values range from -1 to +1, where higher values
+indicate better-defined clusters.
+
+Procedure:
+1. Test K values from 2 to 15
+2. Identify local maxima in silhouette curve
+3. Select K_OPTIMAL (highest silhouette) and K_GRANULAR (finer resolution)
+
+Robust Silhouette Analysis:
+- K-means is sensitive to initialization
+- Run K-means with n_init=10 restarts per seed
+- Average across 100+ random seeds
+- Compute 95% confidence intervals
+- Results in robust_silhouette_analysis.csv
+
+
+1.3 CLUSTERING ALGORITHM
+--------------------------------------------------------------------------------
+Method: K-means Clustering
+Implementation: sklearn.cluster.KMeans
+
+Parameters:
+- n_clusters: K_OPTIMAL (5) and K_GRANULAR (7)
+- n_init: 'auto' (defaults to 10 in sklearn 1.4+; robust silhouette uses explicit n_init=10)
+- random_state: 42 (for reproducibility)
+- max_iter: 300 (sklearn default)
+
+
+================================================================================
+2. STATISTICAL SIGNIFICANCE TESTING FOR GENE EXPRESSION
+================================================================================
+
+2.1 OVERVIEW
+--------------------------------------------------------------------------------
+For each gene in each cluster, we test whether expression is significantly
+different from expression in other clusters. This allows statements like:
+"PIEZO1 is significantly upregulated in cluster 6 (thalamus)."
+
+
+2.2 TEST SELECTION
+--------------------------------------------------------------------------------
+Method: Wilcoxon Rank-Sum Test (Mann-Whitney U)
+Implementation: scipy.stats.mannwhitneyu
+
+Rationale for non-parametric test:
+- No assumption of normal distribution
+- Robust to outliers
+- Appropriate for comparing two independent groups
+- Well-suited for expression data which may be skewed
+
+Alternative: t-test (assumes normality, more power if data is normal)
+
+
+2.3 HYPOTHESIS TESTING PROCEDURE
+--------------------------------------------------------------------------------
+For each gene g and cluster c:
+
+H0: Expression of gene g in cluster c = Expression of gene g in other clusters
+H1: Expression of gene g in cluster c != Expression of gene g in other clusters
+
+Test groups:
+- Group 1: Expression values for gene g in all regions belonging to cluster c
+- Group 2: Expression values for gene g in all regions NOT in cluster c
+
+Test: Two-sided Wilcoxon rank-sum test
+
+
+2.4 MULTIPLE COMPARISON CORRECTION
+--------------------------------------------------------------------------------
+Method: False Discovery Rate (FDR) correction using Benjamini-Hochberg procedure
+Implementation: statsmodels.stats.multitest.multipletests
+
+Number of tests: n_genes x n_clusters (e.g., 35 x 7 = 245 tests)
+
+FDR controls the expected proportion of false positives among rejected
+hypotheses, providing a less conservative correction than Bonferroni while
+maintaining statistical rigor.
+
+Significance thresholds (after FDR correction):
+- *   p_adj < 0.05
+- **  p_adj < 0.01
+- *** p_adj < 0.001
+
+
+2.5 DIRECTION OF EFFECT
+--------------------------------------------------------------------------------
+For each significant result, direction is determined by comparing means:
+- Upregulated (direction = +1): mean expression in cluster > mean in other clusters
+- Downregulated (direction = -1): mean expression in cluster < mean in other clusters
+
+
+2.6 OUTPUT
+--------------------------------------------------------------------------------
+Function: clustering.compute_gene_significance()
+
+Returns dictionary with:
+- p_values: Raw p-values matrix (n_clusters x n_genes)
+- p_adjusted: FDR-corrected p-values matrix
+- direction: Direction of effect matrix (+1 or -1)
+- significant: Boolean matrix of significant results
+- stars: String matrix of significance indicators ('*', '**', '***', '')
+
+Results are visualized on radar plots with:
+- Red asterisks: Significantly upregulated genes
+- Blue asterisks: Significantly downregulated genes
+
+
+================================================================================
+3. MONTE CARLO VALIDATION
+================================================================================
+
+3.1 PURPOSE
+--------------------------------------------------------------------------------
+Test whether TUS gene clustering is specific to mechanosensitive genes or
+reflects general brain architecture that would emerge from any gene set.
+
+
+3.2 METHOD
+--------------------------------------------------------------------------------
+1. Cluster brain regions using TUS genes (reference clustering)
+2. Sample random gene sets of the same size from Allen Brain Atlas
+3. Cluster brain regions using each random gene set
+4. Compare random clustering to TUS clustering using Adjusted Rand Index (ARI)
+5. Repeat for N iterations (default: 10,000; configurable via config.N_MONTE_CARLO_ITERATIONS)
+
+
+3.3 ADJUSTED RAND INDEX (ARI)
+--------------------------------------------------------------------------------
+Implementation: sklearn.metrics.adjusted_rand_score
+
+ARI measures similarity between two clusterings, corrected for chance:
+- ARI = 1: Perfect agreement
+- ARI = 0: Random agreement (expected by chance)
+- ARI < 0: Less than random agreement
+
+Interpretation of TUS vs Random comparison:
+- High ARI (>0.5): Clustering driven by brain architecture
+- Moderate ARI (0.3-0.5): Partial architecture effect
+- Low ARI (<0.3): TUS genes show specific clustering
+
+
+3.4 NULL DISTRIBUTION
+--------------------------------------------------------------------------------
+To establish baseline, we also compute random-vs-random ARI:
+- Sample two independent random gene sets
+- Cluster with each and compute ARI
+- Build null distribution of expected ARI values
+
+
+================================================================================
+4. GENE-LEVEL STATISTICS (KRUSKAL-WALLIS)
+================================================================================
+
+Method: Kruskal-Wallis H-test
+Implementation: scipy.stats.kruskal
+
+Tests whether gene expression differs significantly across ALL clusters
+(omnibus test). Significant results indicate the gene contributes to
+cluster differentiation.
+
+Effect size: Cohen's d computed for each gene
+Multiple testing: Bonferroni correction applied
+
+
+================================================================================
+5. REFERENCES
+================================================================================
+
+Silhouette Analysis:
+- Rousseeuw, P.J. (1987). Silhouettes: a graphical aid to the interpretation
+  and validation of cluster analysis. J. Computational and Applied Mathematics.
+
+Wilcoxon Rank-Sum Test:
+- Mann, H.B. & Whitney, D.R. (1947). On a test of whether one of two random
+  variables is stochastically larger than the other. Annals of Mathematical
+  Statistics.
+
+Benjamini-Hochberg FDR:
+- Benjamini, Y. & Hochberg, Y. (1995). Controlling the false discovery rate:
+  a practical and powerful approach to multiple testing. J. Royal Statistical
+  Society B.
+
+Adjusted Rand Index:
+- Hubert, L. & Arabie, P. (1985). Comparing partitions. J. Classification.
+
+K-means Clustering:
+- Lloyd, S.P. (1982). Least squares quantization in PCM. IEEE Transactions on
+  Information Theory.
+
+
+================================================================================
+CODE IMPLEMENTATION
+================================================================================
+
+Significance testing function: tusgene/clustering.py::compute_gene_significance()
+Main pipeline integration: tusgene/main.py::stage4_gene_statistics()
+Visualization: tusgene/visualization.py::create_figure1_main()
+
+================================================================================

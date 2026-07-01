@@ -1,0 +1,9 @@
+numpy
+pandas
+matplotlib
+nibabel
+scipy
+scikit-learn
+nilearn
+tqdm
+pyvista

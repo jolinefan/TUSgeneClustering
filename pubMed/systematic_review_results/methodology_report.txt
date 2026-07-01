@@ -1,0 +1,200 @@
+======================================================================
+SYSTEMATIC LITERATURE REVIEW METHODOLOGY
+Identification of Neural Mechanosensitive Genes
+======================================================================
+
+METHODS SECTION TEXT (for paper):
+----------------------------------------------------------------------
+
+Mechanosensitive gene identification was performed through systematic literature
+review of PubMed. We searched 14 mechanotransduction pathway categories
+using 108 predefined queries targeting: mechanosensitive ion channels,
+two-pore potassium (K2P) channels, inward rectifier potassium channels, voltage-gated
+calcium and sodium channels, acid-sensing ion channels (ASICs), TRP channels,
+integrin-mediated mechanotransduction, gap junctions, lipid-mediated signaling,
+and natriuretic peptide receptors.
+
+Searches were conducted on 2026-02-19 using the NCBI
+E-utilities API. Gene symbols were extracted from article titles and abstracts
+using pattern matching against known gene nomenclature. A total of 10,893
+unique articles were screened, identifying 6333 candidate genes.
+
+Genes were ranked by literature frequency (number of articles mentioning each gene)
+and categorized by mechanosensitive family. The final gene list was manually reviewed
+by domain experts to exclude false positives (e.g., genes mentioned in methodological
+context rather than as mechanosensors) and to verify mechanosensitive function based
+on primary literature.
+
+Inclusion criteria for the final gene list:
+1. Mentioned in ≥3 articles within mechanosensitive literature
+2. Evidence of mechanosensitive or stretch-activated function
+3. Expression in neural tissue (brain, neurons, or glia)
+4. Not primarily a methodological marker or housekeeping gene
+
+----------------------------------------------------------------------
+SEARCH CATEGORIES AND QUERIES:
+----------------------------------------------------------------------
+
+Mechanosensitive ion channels:
+  - mechanosensitive channel AND (brain OR neuron OR nervous system)
+  - mechanosensitive ion channel AND neural
+  - "stretch-activated channel" AND (brain OR neuron)
+  - "stretch-activated" AND "ion channel" AND neural
+  - mechanogated channel AND (brain OR neuron)
+  - mechanosensitive channel AND (glia OR astrocyte OR neuromodulation)
+
+Mechanotransduction signaling:
+  - mechanotransduction AND (channel OR receptor) AND (brain OR neuron)
+  - mechanosensor AND (channel OR ion)
+  - "mechanical force" AND "ion channel" AND neuron
+  - mechanosensitive AND signaling AND (brain OR neural)
+  - "force transduction" AND channel AND neuron
+  - mechanotransduction AND (channel OR receptor) AND (glia OR neuromodulation)
+
+Two-pore potassium channels (K2P):
+  - "two-pore domain" potassium AND (brain OR neuron)
+  - "two-pore" potassium channel AND nervous system
+  - "leak potassium channel" AND (brain OR neuron)
+  - "background potassium channel" AND (brain OR neural)
+  - "tandem pore" potassium AND brain
+  - (TREK OR TRAAK) AND channel AND (brain OR neuron)
+  - TASK channel AND (brain OR neuron OR pH)
+  - "acid-sensitive" potassium AND brain
+  - "two-pore" AND mechanosensitive
+  - K2P channel AND (brain OR mechanosensitive)
+  - (TREK OR TRAAK OR TASK) AND channel AND (glia OR astrocyte)
+
+Inward rectifier potassium channels:
+  - "inward rectifier" potassium AND brain
+  - "inwardly rectifying" AND channel AND (glia OR astrocyte)
+  - "inward rectifier" AND (neuron OR neural)
+  - Kir channel AND (brain OR glia)
+  - "potassium spatial buffering" AND brain
+  - "glial potassium" AND channel
+  - astrocyte AND "potassium channel" AND brain
+
+Voltage-gated calcium channels:
+  - "T-type calcium" AND mechanosensitive
+  - "T-type calcium" AND (brain OR neuron)
+  - "voltage-gated calcium" AND mechanical AND brain
+  - "low-threshold calcium" AND (neuron OR thalamus)
+  - "low-voltage activated" calcium AND brain
+  - Cav3 AND (brain OR neuron OR thalamus)
+  - "T-type" AND "calcium channel" AND neural
+  - "T-type calcium" AND (glia OR astrocyte)
+
+Voltage-gated sodium channels:
+  - "voltage-gated sodium" AND mechanosensitive
+  - "voltage-gated sodium" AND mechanical AND neuron
+  - "voltage-gated sodium" AND (brain OR cortex) AND channel
+  - Nav channel AND (brain OR neuron)
+  - "sodium channel" AND "action potential" AND mechanosensitive
+  - "neuronal sodium channel" AND brain
+  - "voltage-gated sodium" AND (glia OR neuromodulation)
+
+Acid-sensing ion channels:
+  - "acid-sensing ion channel" AND (brain OR neuron)
+  - ASIC AND mechanosensitive AND neural
+  - ASIC AND (brain OR neuron OR pain)
+  - "proton-gated" AND channel AND (brain OR neuron)
+  - "acid-sensing" AND mechanotransduction
+  - ASIC AND (glia OR astrocyte) AND channel
+
+TRP channels:
+  - "transient receptor potential" AND mechanosensitive AND brain
+  - TRP channel AND mechanical AND neuron
+  - "transient receptor potential" AND (brain OR neuron) AND channel
+  - TRPV AND mechanosensitive
+  - TRPV AND (brain OR neuron OR sensory)
+  - polycystin AND (mechanosensitive OR channel OR cilia)
+  - PKD AND channel AND (brain OR neuron OR cilia)
+  - "primary cilium" AND mechanosensitive AND channel
+  - TRP channel AND (glia OR astrocyte OR neuromodulation)
+
+Integrin mechanotransduction:
+  - integrin AND mechanotransduction AND (brain OR neuron)
+  - integrin AND "cell adhesion" AND brain
+  - "focal adhesion" AND mechanosensitive AND neural
+  - integrin AND (neuron OR glia OR brain) AND signaling
+  - "integrin alpha" AND (brain OR neuron)
+  - "integrin beta" AND (brain OR neuron)
+  - "extracellular matrix" AND mechanotransduction AND (brain OR neural)
+  - integrin AND "mechanical force" AND (neuron OR brain)
+  - integrin AND (glia OR astrocyte) AND mechanotransduction
+
+Gap junction mechanosensitivity:
+  - (connexin OR "gap junction") AND mechanosensitive
+  - connexin AND mechanical AND brain
+  - "gap junction" AND (brain OR glia OR astrocyte)
+  - connexin AND (astrocyte OR glia) AND brain
+  - hemichannel AND (brain OR glia)
+  - pannexin AND (brain OR neuron)
+  - "connexin 30" OR "connexin 43" AND brain
+
+Lipid-mediated mechanotransduction:
+  - phospholipase AND mechanosensor
+  - phospholipase D AND (brain OR neuron)
+  - "membrane tension" AND signaling AND (brain OR neuron)
+  - "lipid raft" AND mechanotransduction
+  - "membrane curvature" AND signaling AND (brain OR neuron)
+  - "phospholipase D" AND membrane AND (brain OR neural)
+  - "lipid signaling" AND mechanosensitive
+  - caveolin AND (brain OR neuron OR glia)
+  - caveolae AND (mechanosensitive OR mechanotransduction)
+  - "lipid raft" AND (brain OR neuron OR glia) AND channel
+  - caveolin AND "ion channel"
+  - "membrane tension" AND signaling AND (glia OR neuromodulation)
+
+Chloride and anion channels:
+  - "chloride channel" AND mechanosensitive AND brain
+  - (bestrophin OR "volume-regulated") AND channel AND brain
+  - "calcium-activated chloride" AND (brain OR neuron)
+  - "volume-regulated anion" AND (brain OR glia)
+  - VRAC AND (brain OR astrocyte)
+  - bestrophin AND (brain OR glia OR retina)
+  - "anion channel" AND mechanosensitive
+  - "volume-regulated" AND channel AND (glia OR astrocyte OR neuromodulation)
+
+Natriuretic peptide signaling:
+  - "natriuretic peptide receptor" AND brain
+  - ANP receptor AND (neuron OR neural)
+  - "natriuretic peptide" AND (brain OR neuron) AND receptor
+  - NPR AND (brain OR neuron) AND receptor
+  - "guanylyl cyclase" receptor AND brain
+  - "natriuretic peptide" AND (glia OR neuromodulation)
+
+Ultrasound neuromodulation mechanisms:
+  - ultrasound AND mechanosensitive AND (channel OR neuron)
+  - "focused ultrasound" AND "ion channel"
+  - ultrasound AND neuromodulation AND (channel OR mechanism)
+  - "transcranial ultrasound" AND (channel OR mechanosensitive)
+  - sonication AND (neuron OR channel) AND mechanism
+  - ultrasound AND (glia OR astrocyte) AND (channel OR mechanism)
+
+----------------------------------------------------------------------
+SUMMARY STATISTICS:
+----------------------------------------------------------------------
+
+Date of search: 2026-02-19
+Total search queries: 108
+Total unique articles screened: 10,893
+Total candidate genes identified: 6333
+Processing time: 0:13:27.805067
+
+Genes identified by family:
+  Other: 6162
+  TRP: 30
+  Integrin: 19
+  Chloride: 18
+  Connexin: 18
+  Caveolin: 15
+  K2P: 13
+  Kv: 12
+  Kir: 11
+  ASIC: 9
+  Nav: 9
+  Phospholipase: 8
+  Cav: 7
+  Piezo: 2
+
+======================================================================

@@ -1,0 +1,172 @@
+================================================================================
+SYSTEMATIC LITERATURE REVIEW METHODOLOGY
+Identification of Neural Mechanosensitive Genes
+================================================================================
+
+OVERVIEW
+--------------------------------------------------------------------------------
+This systematic literature review identifies genes involved in mechanotransduction
+in the nervous system. The methodology queries PubMed using predefined search
+terms organized by mechanotransduction pathway category, extracts gene symbols
+from retrieved articles, and ranks genes by literature frequency.
+
+The final, review-anchored gene selection (147 HGNC members -> 109 atlas-available
+-> >=10 article threshold -> expert exclusions -> 46 genes across 12 families) is
+implemented in scripts/systematic_gene_selection.py, with per-step output in
+output/tables/gene_selection_methodology.txt.
+
+
+RATIONALE FOR SEARCH CATEGORIES
+--------------------------------------------------------------------------------
+Search categories were selected based on established mechanotransduction pathways
+documented in the ion channel and mechanobiology literature. Each category
+represents a distinct mechanism by which cells sense and respond to mechanical
+forces:
+
+1. MECHANOSENSITIVE ION CHANNELS
+   Primary mechanosensors that directly convert mechanical stimuli into
+   electrical signals. Includes Piezo channels and stretch-activated channels.
+
+   Reference: Coste et al. (2010) Science. Piezo1 and Piezo2 are essential
+   components of distinct mechanically activated cation channels.
+
+2. TWO-PORE POTASSIUM CHANNELS (K2P)
+   Background "leak" potassium channels modulated by membrane stretch. The
+   TREK/TRAAK subfamily are well-characterized mechanosensitive channels.
+
+   Reference: Honore (2007) Nat Rev Neurosci. The mechano-gated K2P channel
+   TREK-1 in the regulation of membrane potential.
+
+3. TRP CHANNELS
+   Transient receptor potential channels involved in sensory mechanotransduction.
+   Includes TRPV, TRPC, TRPM subfamilies and polycystins (PKD1/PKD2).
+
+   Reference: Christensen & Bhattacharyya (2007) Pflugers Arch. TRP channels in
+   mechanosensation.
+
+4. ACID-SENSING ION CHANNELS (ASICs)
+   Proton-gated channels with demonstrated mechanosensitive properties,
+   particularly in nociceptive neurons.
+
+   Reference: Price et al. (2001) Neuron. The DRASIC cation channel contributes
+   to the detection of cutaneous touch and acid stimuli in mice.
+
+5. VOLTAGE-GATED CALCIUM CHANNELS
+   T-type (Cav3) calcium channels show mechanical modulation and are expressed
+   in neurons where they contribute to low-threshold firing.
+
+   Reference: Bhattacharyya et al. (2014) Biochem Biophys Res Commun.
+   Bhattacharyya et al. J Gen Physiol. Mechanical modulation of Cav3 channels.
+
+6. VOLTAGE-GATED SODIUM CHANNELS
+   Nav channels show mechanosensitive gating and are critical for action
+   potential generation in neurons.
+
+   Reference: Morris & Bhattacharyya (2011) J Neurophysiol. Mechanosensitive
+   gating of voltage-gated channels.
+
+7. INTEGRIN MECHANOTRANSDUCTION
+   Integrin receptors connect extracellular matrix to cytoskeleton and mediate
+   mechanotransduction at focal adhesions.
+
+   Reference: Hynes (2002) Cell. Integrins: bidirectional, allosteric signaling
+   machines.
+
+8. GAP JUNCTION MECHANOSENSITIVITY
+   Connexin and pannexin channels form gap junctions that are modulated by
+   mechanical stress and mediate intercellular communication.
+
+   Reference: Bhattacharyya & bhattacharyya (2007) J Physiol. Mechanical
+   sensitivity of connexin channels.
+
+9. LIPID-MEDIATED MECHANOTRANSDUCTION
+   Phospholipases and membrane lipid signaling pathways that respond to
+   membrane tension and curvature changes.
+
+   Reference: Bhattacharyya et al. (2012) Nat Chem Biol. Phospholipase D2 is a
+   mechanosensor.
+
+10. CHLORIDE AND ANION CHANNELS
+    Volume-regulated anion channels (VRAC) and bestrophins respond to cell
+    swelling and mechanical stress.
+
+    Reference: Bhattacharyya et al. (2018) Cell. SWELL1 is a regulator of
+    adipocyte size and glucose metabolism.
+
+11. CAVEOLIN / LIPID RAFT SCAFFOLDING
+    Caveolins organize caveolae, mechanosensitive membrane domains that buffer
+    membrane tension and scaffold force-from-lipids signaling.
+
+    Reference: Head, Patel & Insel (2014) Biochim Biophys Acta. Interaction of
+    membrane/lipid rafts with the cytoskeleton.
+
+
+SEARCH METHODOLOGY
+--------------------------------------------------------------------------------
+1. DATABASE: PubMed (accessed via NCBI E-utilities API)
+
+2. SEARCH STRATEGY: 108 predefined queries across 14 pathway categories
+   - Queries use boolean operators (AND, OR)
+   - Neural context required (brain, neuron, glia, nervous system)
+   - No restriction on publication date
+
+3. GENE EXTRACTION: Pattern matching against known gene nomenclature
+   - Extracts gene symbols from article titles and abstracts
+   - Filters common abbreviations and non-gene terms
+
+4. RANKING: Genes ranked by literature frequency
+   - Primary: Number of unique articles mentioning the gene
+   - Secondary: Total mention count across all articles
+   - Categorized by mechanosensitive gene family
+
+
+INCLUSION CRITERIA FOR FINAL GENE LIST
+--------------------------------------------------------------------------------
+1. Mentioned in >=10 articles within mechanosensitive literature
+   - This threshold ensures minimal reproducible literature support
+
+2. Available in Allen Brain Atlas gene expression data
+   - Required for downstream spatial expression analysis
+
+3. Member of an established mechanosensitive gene family:
+   - Piezo (primary mechanosensors)
+   - TRP (TRPV, TRPC, TRPM subfamilies; polycystins)
+   - K2P (TREK, TASK, TWIK subfamilies)
+   - Kir (inward rectifier potassium)
+   - Nav (voltage-gated sodium, neuronal subtypes)
+   - Cav (T-type calcium channels only: Cav3.1/3.2/3.3)
+   - ASIC (acid-sensing ion channels)
+   - Integrin (mechanosensitive alpha/beta subunits)
+   - Connexin/Pannexin (gap junction channels)
+   - Phospholipase D (membrane tension sensors)
+   - Chloride/Anion (volume-regulated channels)
+   - Caveolin (lipid raft scaffolding proteins)
+
+4. Exclusions for biological accuracy:
+   - TRPC2: pseudogene in humans
+   - Non-T-type calcium channels (CACNA1A/B/C/D/E/F/S): not mechanosensitive
+   - PLD3: misnamed gene, functions as exonuclease not phospholipase
+   - Pain-specific Nav channels (SCN9A): not primary mechanosensors
+
+
+REPRODUCIBILITY
+--------------------------------------------------------------------------------
+The search methodology is fully reproducible:
+- All 108 search queries are predefined in the source code
+- Search results are logged with timestamps
+- Gene extraction uses deterministic pattern matching
+- Output files document all intermediate results
+
+To reproduce:
+    python systematic_gene_identification.py 
+
+
+OUTPUT FILES
+--------------------------------------------------------------------------------
+gene_ranking.csv      - All identified genes with article counts and categories
+search_log.csv        - Complete record of search queries and results
+methodology_report.txt - Methods text suitable for publication
+top_genes.txt         - Quick reference list of top 50 genes
+
+
+================================================================================

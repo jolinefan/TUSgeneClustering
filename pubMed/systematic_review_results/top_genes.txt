@@ -1,0 +1,55 @@
+Top Mechanosensitive Genes by Literature Frequency
+============================================================
+
+Rank  Gene        Family      Articles  Categories
+------------------------------------------------------------
+1     TRP         Other       418       14
+2     TRPV1       TRP         403       14
+3     DRG         Other       330       14
+4     PIEZO1      Piezo       325       11
+5     BNP         Other       291       7
+6     TRPV4       TRP         272       13
+7     ASIC        Other       259       8
+8     CAV1        Caveolin    251       8
+9     CX43        Connexin    248       10
+10    TREK        Other       243       12
+11    ANP         Other       233       6
+12    KCNK2       K2P         225       13
+13    NPR         Other       218       3
+14    TRPA1       TRP         202       12
+15    GJA1        Connexin    198       11
+16    PKD         Other       180       5
+17    PLD         Other       178       3
+18    ADPKD       Other       178       4
+19    KCNJ10      Kir         175       5
+20    CAV3        Caveolin    168       7
+21    KIR4.1      Other       168       5
+22    ASIC1A      ASIC        162       5
+23    ECM         Other       158       14
+24    PKD1        TRP         155       4
+25    PANX1       Connexin    155       7
+26    TNF         Other       148       14
+27    GFAP        Other       147       14
+28    BEST1       Chloride    147       4
+29    TASK        Other       140       7
+30    TWIK        Other       140       9
+31    CNP         Other       137       4
+32    CA1         Other       134       14
+33    PIEZO2      Piezo       132       9
+34    GBM         Other       129       13
+35    PKD2        TRP         121       5
+36    ASIC3       ASIC        113       8
+37    III         Other       111       13
+38    KCNK3       K2P         106       7
+39    VRAC        Other       100       8
+40    ERK         Other       99        13
+41    MAPK        Other       95        14
+42    ROS         Other       93        14
+43    PI3K        Other       90        13
+44    PKC         Other       90        13
+45    LPS         Other       89        14
+46    CACNA1H     Cav         89        5
+47    BDNF        Other       86        13
+48    KCNK9       K2P         86        4
+49    AQP4        Other       82        11
+50    KCNK10      K2P         82        10

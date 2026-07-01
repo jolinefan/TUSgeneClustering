@@ -1,0 +1,30 @@
+# Virtual environment
+venv/
+.venv/
+
+# IDE settings
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+
+# Local tooling config
+.claude/
+
+# Windows / Office artifacts
+nul
+~$*
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# OS files
+.DS_Store
+Thumbs.db
+output/figures/figure1_main.tiff
